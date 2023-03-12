@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="EmulatorUI.CPUControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EmulatorUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.55*"/>
+            <RowDefinition Height="0.22*"/>
+            <RowDefinition Height="0.23*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.85*"/>
+            <ColumnDefinition Width="0.15*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="CommandOverviewGrid" Margin="2"
+              Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.18*"/>
+                <RowDefinition Height="0.82*"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="NextCommandButton" Click="NextCommandButton_Click" Margin="8" Content="След. команда"
+                    Grid.Row="0" Grid.Column="0"/>
+            <Button x:Name="RunProgramButton" Click="RunProgramButton_Click" Margin="8" Content="Выполнить"
+                    Grid.Row="0" Grid.Column="1"/>
+            <Border Margin="10" BorderThickness="1.5" BorderBrush="Black"
+                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" >
+                    <StackPanel x:Name="ProgramSP">
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            
+        </Grid>
+
+        <StackPanel x:Name="RegistersSP" Margin="2"
+                    Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
+            <TextBlock Text="Регистры" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Margin="2"
+                    Grid.Row="1" Grid.Column="0">
+            <TextBlock Text="Следующая команда:" HorizontalAlignment="Center"/>
+            <StackPanel x:Name="CommandBreakdownSP" Orientation="Horizontal" HorizontalAlignment="Left"></StackPanel>
+        </StackPanel>
+
+        <ScrollViewer Margin="4" Padding="5"
+                      Grid.Row="2" Grid.Column="0">
+            <Border BorderThickness="2" CornerRadius="2" BorderBrush="Black" >
+                <TextBlock x:Name="OutputTBlock" Text="Вывод&#x0d;&#x0a;" Padding="10"/>
+            </Border>
+        </ScrollViewer>
+
+        <Border Margin="4" BorderBrush="Black" BorderThickness="2" CornerRadius="1"
+                Grid.Row="2" Grid.Column="1" Padding="5">
+            <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel x:Name="StackSP">
+                    <TextBlock Text="Стек" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+        
+        
+    </Grid>
+</UserControl>

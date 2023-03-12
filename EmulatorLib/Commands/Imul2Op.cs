@@ -1,0 +1,108 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Emulator.Commands
+{
+	public class Imul2Op : Command
+	{
+		public override string GetCode()
+		{
+			return "imul";
+		}
+
+		public override void ProcessRegReg( CPU cpu, uint reg1, uint reg2, SizeMode size )
+		{
+			if (size == SizeMode.OneByte)
+			{
+				var value = (byte)((sbyte)cpu.GeneralRegisters[reg1] * (sbyte)cpu.GeneralRegisters[reg2]);
+				cpu.GeneralRegisters[reg1] = cpu.GeneralRegisters[reg1] & 0xFFFFFF00u | value;
+			}
+			else if (size == SizeMode.TwoBytes)
+			{
+				var value = (ushort)((short)cpu.GeneralRegisters[reg1] * (short)cpu.GeneralRegisters[reg2]);
+				cpu.GeneralRegisters[reg1] = cpu.GeneralRegisters[reg1] & 0xFFFF0000u | value;
+			}
+			else if (size == SizeMode.TwoBytesHigher)
+			{
+
+			}
+			else
+			{
+				cpu.GeneralRegisters[reg1] = (uint)((int)cpu.GeneralRegisters[reg1] * (int)cpu.GeneralRegisters[reg2]);
+			}
+		}
+
+		public override void ProcessRegImm( CPU cpu, uint reg, uint immediate, SizeMode size )
+		{
+			if (size == SizeMode.OneByte)
+			{
+				var value = (byte)((sbyte)cpu.GeneralRegisters[reg] * (sbyte)immediate);
+				cpu.GeneralRegisters[reg] = cpu.GeneralRegisters[reg] & 0xFFFFFF00u | value;
+			}
+			else if (size == SizeMode.TwoBytes)
+			{
+				var value = (ushort)((short)cpu.GeneralRegisters[reg] * (short)immediate);
+				cpu.GeneralRegisters[reg] = cpu.GeneralRegisters[reg] & 0xFFFF0000u | value;
+			}
+			else if (size == SizeMode.TwoBytesHigher)
+			{
+
+			}
+			else
+			{
+				cpu.GeneralRegisters[reg] = (uint)((int)cpu.GeneralRegisters[reg] * (int)immediate);
+			}
+		}
+
+		public override void ProcessRegMem( CPU cpu, uint reg, uint address, SizeMode size )
+		{
+			if (size == SizeMode.OneByte)
+			{
+				var value = (byte)((sbyte)cpu.GeneralRegisters[reg] * (sbyte)cpu.Memory[address]);
+				cpu.GeneralRegisters[reg] = cpu.GeneralRegisters[reg] & 0xFFFFFF00u | value;
+			}
+			else if (size == SizeMode.TwoBytes)
+			{
+				var value = (ushort)((short)cpu.GeneralRegisters[reg] * BitConverter.ToInt16( cpu.Memory, (int)address ));
+				cpu.GeneralRegisters[reg] = cpu.GeneralRegisters[reg] & 0xFFFF0000u | value;
+			}
+			else if (size == SizeMode.TwoBytesHigher)
+			{
+
+			}
+			else
+			{
+				cpu.GeneralRegisters[reg] = (uint)((int)cpu.GeneralRegisters[reg] * BitConverter.ToInt32( cpu.Memory, (int)address ));
+			}
+		}
+
+		public override void ProcessMemReg( CPU cpu, uint reg, uint address, SizeMode size )
+		{
+			if (size == SizeMode.OneByte)
+			{
+				cpu.Memory[address] = (byte)((sbyte)cpu.Memory[address] * (sbyte)cpu.GeneralRegisters[reg]);
+			}
+			else if (size == SizeMode.TwoBytes)
+			{
+				var value = (ushort)(BitConverter.ToInt16( cpu.Memory, (int)address ) * (short)cpu.GeneralRegisters[reg]);
+				cpu.Memory[address] = (byte)value;
+				cpu.Memory[address + 1] = (byte)(value >> 8);
+			}
+			else if (size == SizeMode.TwoBytesHigher)
+			{
+
+			}
+			else
+			{
+				var value = (uint)(BitConverter.ToInt32( cpu.Memory, (int)address ) * (int)cpu.GeneralRegisters[reg]);
+				cpu.Memory[address] = (byte)value;
+				cpu.Memory[address + 1] = (byte)(value >> 8);
+				cpu.Memory[address + 2] = (byte)(value >> 16);
+				cpu.Memory[address + 3] = (byte)(value >> 24);
+			}
+		}
+	}
+}

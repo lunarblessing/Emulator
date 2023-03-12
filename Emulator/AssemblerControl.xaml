@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="EmulatorUI.AssemblerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EmulatorUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.14*"/>
+            <RowDefinition Height="0.64*"/>
+            <RowDefinition Height="0.12*"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="10" MinHeight="40"
+                    Grid.Row="0">
+            <Button x:Name="OpenFileButton" Click="OpenFileButton_Click" Content="Открыть файл" Margin="8" Padding="2"/>
+            <Button x:Name="SaveFileButton" Click="SaveFileButton_Click" Content="Cохранить файл" Margin="8" Padding="2"/>
+            <Button x:Name="NewFileButton" Click="NewFileButton_Click" Content="Новый файл" Margin="8" Padding="2"/>
+        </StackPanel>
+        <Border BorderThickness="1.5" BorderBrush="Black" CornerRadius="2" Margin="3"
+                Grid.Row="1">
+            <TextBox x:Name="ProgramTB" Padding="5" TextWrapping="Wrap" AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Visible" AcceptsTab="True"/>
+        </Border>
+        <Button x:Name="CompileButton" Click="CompileButton_Click" Margin="5" Content="Скомпилировать"
+                Padding="2" MaxWidth="200" HorizontalAlignment="Left" MinHeight="40"
+                Grid.Row="2"/>
+        <TextBlock x:Name="ErrorTBlock" Margin="5" Foreground="Red" Padding="5" HorizontalAlignment="Left" MinHeight="40"
+                   Grid.Row="3"/>
+    </Grid>
+</UserControl>
